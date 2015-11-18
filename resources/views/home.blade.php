@@ -10,6 +10,7 @@
                         <ul class="list-group">
                             <li class="list-group-item"><a href="{{ url('') }}">管理图书信息</a></li>
                             <li class="list-group-item"><a href="{{ url('') }}">管理图书借出入信息</a></li>
+                            <li class="list-group-item"><a href="{{ url('') }}">借书黑名单</a></li>
                         </ul>
                     </div>
                 </div>
