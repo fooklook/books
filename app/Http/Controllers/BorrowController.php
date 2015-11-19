@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BorrowController extends Controller {
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
 
 	/**
 	 * Display a listing of the resource.
@@ -19,7 +23,7 @@ class BorrowController extends Controller {
 		$borrow = Borrow::with('book');
 		$borrow->orderBy('borrow_id', 'DESC');
 		if($request->username != ""){
-			$borrow->where('book_name', 'like', "%".$request->book_name."%");
+			$borrow->where('username', 'like', "%".$request->username."%");
 		}
 		if($request->book_press != ""){
 			$borrow->where('userno', 'like', "%".$request->userno."%");
@@ -123,6 +127,16 @@ class BorrowController extends Controller {
 	}
 
 	public function  back($id){
+		$data = array('errNum'=>0, 'errMsg'=>'', 'errDate'=>'');
+		$borrow = Borrow::find($id);
+		$borrow->status = 1;
+		if($borrow->update()){
+			$data['errMsg'] = "归还成功";
+			return json_encode($data);
+		}else{
+			$data['errMsg'] = "归还失败";
+			return json_encode($data);
+		}
 
 	}
 

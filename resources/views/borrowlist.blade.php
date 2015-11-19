@@ -68,10 +68,9 @@
                 var r = confirm('确定归还图书吗？');
                 if( r == true ) {
                     var book_id = $(this).attr('book_id');
-                    $.post(
-                            '{{ url('book') }}/'+ book_id,
+                    $.get(
+                            '{{ url('borrow/back') }}/'+ book_id,
                             {
-                                _method: 'DELETE',
                                 _token: '{{ csrf_token() }}',
                             },
                             function (data, status) {

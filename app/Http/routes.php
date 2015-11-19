@@ -21,4 +21,4 @@ Route::controllers([
 ]);
 Route::resource('book', 'BookController');
 Route::resource('borrow', 'BorrowController');
-Route::get('back/{$id}', 'BorrowController@back');
+Route::get('borrow/back/{id}', 'BorrowController@back');
