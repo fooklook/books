@@ -3,11 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="86af8e03-6993-467d-a02d-2c70a7708a1c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/BookController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/BookController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/BorrowController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/BorrowController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/borrowlist.blade.php" afterPath="$PROJECT_DIR$/resources/views/borrowlist.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/readme.md" afterPath="$PROJECT_DIR$/readme.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="laravel.iws" />
@@ -67,8 +62,8 @@
       <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.021348314">
-              <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.08539326">
+              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -931,8 +926,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.021348314">
-          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.08539326">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
