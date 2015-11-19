@@ -1,4 +1,12 @@
 ##安装说明
+###安装应用
+网站使用的是laravel5.0，所以服务器应该提前安装composer。
+
+安装好composer后，执行
+```shell
+composer install
+```
+命令。
 ###配置信息
 
 - 复制.env.example文件命名为.env文件
