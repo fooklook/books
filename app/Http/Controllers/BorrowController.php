@@ -28,7 +28,7 @@ class BorrowController extends Controller {
 		if($request->book_press != ""){
 			$borrow->where('userno', 'like', "%".$request->userno."%");
 		}
-		$lists = $borrow->paginate(5);
+		$lists = $borrow->paginate(15);
 		return view('borrowlist', array('borrows'=>$lists->toArray(), 'pages'=>$lists->render(), 'request'=>$request));
 	}
 

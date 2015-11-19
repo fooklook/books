@@ -46,7 +46,7 @@
                         <td>{{ $book->book_press }}</td>
                         <td>{{ $book->book_num }}</td>
                         <td>{{ $book->book_res }}</td>
-                        <td><a href="{{ url('borrow/create') }}" title="借书"><span class="glyphicon glyphicon-export"></span></a>
+                        <td><a href="{{ url("borrow/create")."?book_id=".$book->book_id }}" title="借书"><span class="glyphicon glyphicon-export"></span></a>
                             <a style="color: red;" href="{{ url("book/{$book->book_id}/edit") }}" title="编辑"><span class="glyphicon glyphicon-pencil"></span></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
                             <a href="javascript:void(0);" book_id="{{ $book->book_id }}" title="删除" class="delete"><span class="glyphicon glyphicon-remove"></span></a>
                         </td>
