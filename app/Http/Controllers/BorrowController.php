@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Book;
 use App\Borrow;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -39,8 +40,14 @@ class BorrowController extends Controller {
 	 */
 	public function create(Request $request)
 	{
+		//没有book_id
 		if($request->book_id == ""){
 			return view('errors.error', array('error'=>'请先选择要借的图书-><a href="'.url('book').'">图书列表</a>->点击 <span class="glyphicon glyphicon-export"></span>'));
+		}
+		//书没有库存
+		$book = Book::find($request->book_id);
+		if($book->book_res <= 0){
+			return view('errors.error', array('error'=>'《'.$book->book_name.'》已经借完。->返回<a href="'.url('book').'">图书列表</a>'));
 		}
 		return view('borrowadd', array('book_id'=>$request->book_id));
 	}
