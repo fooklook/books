@@ -15,4 +15,5 @@ class Book extends Model {
         'book_res',
     );
 
+
 }

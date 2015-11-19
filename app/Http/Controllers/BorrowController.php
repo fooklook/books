@@ -1,9 +1,11 @@
 <?php namespace App\Http\Controllers;
 
+use App\Borrow;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BorrowController extends Controller {
 
@@ -12,9 +14,18 @@ class BorrowController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-		//
+		$borrow = Borrow::with('book');
+		$borrow->orderBy('borrow_id', 'DESC');
+		if($request->username != ""){
+			$borrow->where('book_name', 'like', "%".$request->book_name."%");
+		}
+		if($request->book_press != ""){
+			$borrow->where('userno', 'like', "%".$request->userno."%");
+		}
+		$lists = $borrow->paginate(5);
+		return view('borrowlist', array('borrows'=>$lists->toArray(), 'pages'=>$lists->render(), 'request'=>$request));
 	}
 
 	/**
@@ -22,9 +33,12 @@ class BorrowController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function create(Request $request)
 	{
-		//
+		if($request->book_id == ""){
+			return view('errors.error', array('error'=>'请先选择要借的图书-><a href="'.url('book').'">图书列表</a>->点击 <span class="glyphicon glyphicon-export"></span>'));
+		}
+		return view('borrowadd', array('book_id'=>$request->book_id));
 	}
 
 	/**
@@ -32,9 +46,23 @@ class BorrowController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Request $request)
 	{
-		//
+		$data = array('errNum'=>0, 'errMsg'=>'', 'errDate'=>'');
+		$borrow = new Borrow();
+		$borrow->book_id = $request->book_id;
+		$borrow->username = $request->username;
+		$borrow->userno = $request->userno?$request->userno:"";
+		$borrow->phone = $request->phone?$request->phone:"";
+		$borrow->return_at = $request->return_at;
+		$borrow->status = 0;
+		if($borrow->save()){
+			$data['errMsg'] = "添加成功";
+			return json_encode($data);
+		}else{
+			$data['errMsg'] = "添加失败";
+			return json_encode($data);
+		}
 	}
 
 	/**
@@ -56,7 +84,8 @@ class BorrowController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		$borrow = Borrow::find($id);
+		return view('borrowedit', array('borrow'=>$borrow));
 	}
 
 	/**
@@ -65,9 +94,21 @@ class BorrowController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($id, Request $request)
 	{
-		//
+		$data = array('errNum'=>0, 'errMsg'=>'', 'errDate'=>'');
+		$borrow = Borrow::find($id);
+		$borrow->username = $request->username;
+		$borrow->userno = $request->userno?$request->userno:"";
+		$borrow->phone = $request->phone?$request->phone:"";
+		$borrow->return_at = $request->return_at;
+		if($borrow->update()){
+			$data['errMsg'] = "更新成功";
+			return json_encode($data);
+		}else{
+			$data['errMsg'] = "添加失败";
+			return json_encode($data);
+		}
 	}
 
 	/**
@@ -79,6 +120,10 @@ class BorrowController extends Controller {
 	public function destroy($id)
 	{
 		//
+	}
+
+	public function  back($id){
+
 	}
 
 }

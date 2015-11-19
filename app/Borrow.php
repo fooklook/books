@@ -15,5 +15,8 @@ class Borrow extends Model {
         'return_at',
         'status'
     );
+    public function book(){
+        return $this->hasOne('App\Book','book_id','book_id');
+    }
 
 }

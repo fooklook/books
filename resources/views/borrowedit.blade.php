@@ -1,39 +1,41 @@
 @extends('app')
 
 @section('content')
+    <link href="{{ asset('css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
                 <div class="row"><a href="{{ url('/book') }}">返回图书列表</a></div>
-                <div class="row"><h2><span class="glyphicon glyphicon-plus"></span>添加图书</h2></div>
+                <div class="row"><h2><span class="glyphicon glyphicon-plus"></span>借书记录</h2></div>
                 <div class="row">
                     <div class="row">
 
                         <span style="color: red;"><b>*</b></span> 为必填字段
 
                     </div>
-                    <form action="{{ url('book') }}" enctype="multipart/form-data" method="post" id="my_form">
+                    <form action="{{ url('borrow/'.$borrow->borrow_id) }}" enctype="multipart/form-data" method="post" id="my_form">
+                        <input type="hidden" name="_method" value="PUT">
                         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                        <div class="form-group col-md-12">
-                            <label for="exampleInputName2">书名 <span style="color: red;"><b>*</b></span></label>
-                            <input type="text" class="form-control" id="exampleInputName2" placeholder="" name="book_name">
+                        <div class="row">
+                            <h3>所借书籍： 《{{ $borrow->book->book_name }}》</h3>
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="exampleInputEmail2">作者</label>
-                            <input type="text" class="form-control" id="exampleInputEmail2" placeholder="" name="book_auther">
+                            <label for="exampleInputName2">借书人 <span style="color: red;"><b>*</b></span></label>
+                            <input type="text" class="form-control" id="exampleInputName2" placeholder="" name="username" value="{{ $borrow->username }}">
                         </div>
                         <div class="form-group col-md-12">
-                            <label for="exampleInputEmail2">出版社</label>
-                            <input type="text" class="form-control" id="exampleInputEmail2" placeholder="" name="book_press">
+                            <label for="exampleInputEmail2">借书人工号</label>
+                            <input type="text" class="form-control" id="exampleInputEmail2" placeholder="" name="userno" value="{{ $borrow->userno }}">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-md-12">
+                            <label for="exampleInputEmail2">借书人手机号码</label>
+                            <input type="text" class="form-control" id="exampleInputEmail2" placeholder="" name="phone" value="{{ $borrow->phone }}">
+                        </div>
+                        <div class="form-group input-append date" id="datetimepicker" data-date="{{ date('Y-m-d hh:ii') }}" data-date-format="yyyy-mm-dd hh:ii">
                             <div class="col-md-6">
-                                <label for="exampleInputEmail2">总数 <span style="color: red;"><b>*</b></span></label>
-                                <input type="text" class="form-control" id="exampleInputEmail2" placeholder="" name="book_num" onkeyup="value=value.replace(/[^1234567890-]+/g,'')">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="exampleInputEmail2">剩余 <span style="color: red;"><b>*</b></span></label>
-                                <input type="text" class="form-control" id="exampleInputEmail2" placeholder="" name="book_res" onkeyup="value=value.replace(/[^1234567890-]+/g,'')">
+                                <label for="exampleInputEmail2">预计归还时间 <span style="color: red;"><b>*</b></span></label>
+                                <input type="text" class="form-control" id="exampleInputEmail2" placeholder="" name="return_at" value="{{ $borrow->return_at}}" readonly>
+                                <span class="add-on"><i class="icon-th"></i></span>
                             </div>
                         </div>
                         <div class="form-group" style="height:20px;"></div>
@@ -50,6 +52,7 @@
 @endsection
 @section('jquery')
     <script type="text/javascript" src="{{ asset("js/jquery.form.js") }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap-datetimepicker.js') }}"></script>
     <script type="text/javascript">
         //删除操作
         $(function(){
@@ -63,27 +66,14 @@
                 $(this).ajaxSubmit(options);
                 return false;
             });
+            $('#datetimepicker').datetimepicker();
         });
         function showRequest(formData, jqForm, options) {
             var status = true;
             $.each(formData,function(i,value){
-                if(value.name == "book_name"){
+                if(value.name == "username"){
                     if(value.value == ""){
-                        alert("书名不能为空");
-                        status = false;
-                        return false;
-                    }
-                }
-                if(value.name == "book_num"){
-                    if(value.value == ""){
-                        alert("总数不能为空");
-                        status = false;
-                        return false;
-                    }
-                }
-                if(value.name == "book_res"){
-                    if(value.value == ""){
-                        alert("剩余量不能为空");
+                        alert("借书人姓名不能空");
                         status = false;
                         return false;
                     }
@@ -96,7 +86,7 @@
         function showResponse(responseText, statusText) {
             alert(responseText.errMsg);
             if(responseText.errNum == 0){
-                location.href = '{{ url('book') }}';
+                location.href = '{{ url('borrow') }}';
             }
             return false;
         }

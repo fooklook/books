@@ -20,3 +20,5 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 Route::resource('book', 'BookController');
+Route::resource('borrow', 'BorrowController');
+Route::get('back/{$id}', 'BorrowController@back');
