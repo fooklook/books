@@ -8,7 +8,7 @@ class UserTableSeeder extends Seeder {
 
         $user = new User();
         $user->name = 'admin';
-        $user->email = 'xiashuo.he@foxmail.com';
+        $user->email = 'admin@ycz.com';
         $user->password = crypt('admin');
         $user->save();
     }
