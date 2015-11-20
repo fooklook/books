@@ -67,6 +67,10 @@ class BorrowController extends Controller {
 		$borrow->phone = $request->phone?$request->phone:"";
 		$borrow->return_at = $request->return_at;
 		$borrow->status = 0;
+		//减去一本库存
+		$book = Book::find($request->book_id);
+		$book->book_res = $book->book_res - 1;
+		$book->save();
 		if($borrow->save()){
 			$data['errMsg'] = "添加成功";
 			return json_encode($data);
@@ -137,6 +141,9 @@ class BorrowController extends Controller {
 		$data = array('errNum'=>0, 'errMsg'=>'', 'errDate'=>'');
 		$borrow = Borrow::find($id);
 		$borrow->status = 1;
+		$book = Book::find($borrow->book_id);
+		$book->book_res = $book->book_res + 1;
+		$book->save();
 		if($borrow->update()){
 			$data['errMsg'] = "归还成功";
 			return json_encode($data);
